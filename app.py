@@ -71,7 +71,7 @@ elif menu == "💰 Controle de Gastos":
         
         with col1:
             item = st.text_input("Item / Serviço (ex: Fotógrafo, Flores)")
-            categoria = st.selectbox("Categoria do Gasto:", ["Cerimônia", "Festa", "Roupas e Maquiagem", "Papelaria", "Lua de Mel", "Outros"])
+            categoria = st.selectbox("Categoria do Gasto:", ["Cerimônia", "Festa", "Roupas e Maquiagem", "Buffet", "Lua de Mel", "Local" , "Espaço", "Comidas e bebidas" , "Fotografo" , "Doces e Bolo" , "Dj e iluminação" ])
         with col2:
             valor_previsto = st.number_input("Valor Total/Previsto (R$)", min_value=0.0, format="%.2f")
             valor_pago = st.number_input("Valor Já Pago (R$)", min_value=0.0, format="%.2f")
@@ -110,3 +110,4 @@ elif menu == "💰 Controle de Gastos":
         st.dataframe(df_gastos, hide_index=True, use_container_width=True)
     else:
         st.info("Ainda não há gastos registrados. Comece adicionando o primeiro orçamento acima!")
+
