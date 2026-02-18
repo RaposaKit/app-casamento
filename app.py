@@ -82,7 +82,7 @@ elif menu == "💰 Controle de Gastos":
         col1, col2 = st.columns(2)
         with col1:
             item = st.text_input("Item / Serviço")
-            categoria = st.selectbox("Categoria:", ["Cerimônia", "Festa", "Roupas e Maquiagem", "Papelaria", "Lua de Mel", "Outros"])
+            categoria = st.selectbox("Categoria:", ["Cerimônia", "Festa", "Roupas", "Dj","Espaço", "Buffet", "Fotografo", "Doces e Bolo" , "Lua de Mel", "Outros"])
         with col2:
             valor_previsto = st.number_input("Valor Previsto (R$)", min_value=0.0, format="%.2f")
             valor_pago = st.number_input("Valor Pago (R$)", min_value=0.0, format="%.2f")
@@ -146,3 +146,4 @@ elif menu == "💰 Controle de Gastos":
                 st.rerun() # Atualiza os gráficos imediatamente!
     else:
         st.info("Ainda não há gastos registrados.")
+
