@@ -94,44 +94,53 @@ elif menu == "💰 Controle de Gastos":
         df_gastos['Valor Previsto'] = pd.to_numeric(df_gastos['Valor Previsto'], errors='coerce').fillna(0)
         df_gastos['Valor Pago'] = pd.to_numeric(df_gastos['Valor Pago'], errors='coerce').fillna(0)
         
-        # Cálculos Matemáticos
         total_previsto = df_gastos['Valor Previsto'].sum()
         total_pago = df_gastos['Valor Pago'].sum()
         falta_pagar = total_previsto - total_pago
 
+        # --- NOVIDADE: BARRA DE PROGRESSO DO TETO GERAL ---
+        st.subheader("🎯 Meta do Orçamento Geral")
+        teto_geral = st.number_input("Qual o Teto Máximo que vocês pretendem gastar no total? (R$)", min_value=1.0, value=30000.0, step=1000.0)
+        
+        porcentagem_uso = (total_previsto / teto_geral) * 100
+        
+        # Desenha a barra (trava no máximo de 100% visualmente)
+        st.progress(min(porcentagem_uso / 100, 1.0)) 
+        
+        if porcentagem_uso > 100:
+            st.error(f"⚠️ Atenção! O valor previsto total (R$ {total_previsto:,.2f}) já ultrapassou o teto do orçamento em {porcentagem_uso - 100:.1f}%!")
+        else:
+            st.success(f"✅ O planejamento atual compromete {porcentagem_uso:.1f}% do teto geral.")
+
+        st.divider()
+
         # Painel de Resumo
         st.subheader("📊 Resumo Financeiro")
         c1, c2, c3 = st.columns(3)
-        c1.metric("Orçamento Total", f"R$ {total_previsto:,.2f}")
+        c1.metric("Orçamento Total (Previsto)", f"R$ {total_previsto:,.2f}")
         c2.metric("Total Já Pago", f"R$ {total_pago:,.2f}")
         c3.metric("Falta Pagar", f"R$ {falta_pagar:,.2f}")
 
-        # --- NOVA SEÇÃO DE GRÁFICOS ---
+        # --- GRÁFICOS ---
         st.divider()
         st.subheader("📈 Visão Geral do Orçamento")
         
-        # Cria duas colunas para colocar os gráficos lado a lado no PC (no celular eles ficam um embaixo do outro)
         col_grafico1, col_grafico2 = st.columns(2)
         
         with col_grafico1:
-            st.caption("Status Geral (R$)")
-            # Cria uma mini-tabela só para o gráfico ler
+            st.caption("Status Geral do Dinheiro (R$)")
             df_resumo = pd.DataFrame({
                 "Status": ["Total Previsto", "Total Pago", "Falta Pagar"],
                 "Valores": [total_previsto, total_pago, falta_pagar]
             }).set_index("Status")
-            # Desenha o gráfico de barras
             st.bar_chart(df_resumo)
             
         with col_grafico2:
-            st.caption("Gastos por Categoria - Já Pago (R$)")
-            # Agrupa os dados pela Categoria e soma os valores pagos
-            gastos_por_categoria = df_gastos.groupby("Categoria")["Valor Pago"].sum()
-            # Desenha o gráfico
+            st.caption("Comparativo: Previsto vs Pago por Categoria (R$)")
+            # --- NOVIDADE: AGRUPANDO DUAS COLUNAS PARA COMPARAR LADO A LADO ---
+            gastos_por_categoria = df_gastos.groupby("Categoria")[["Valor Previsto", "Valor Pago"]].sum()
             st.bar_chart(gastos_por_categoria)
 
-        # ------------------------------
-        
         st.divider()
         st.subheader("🧾 Extrato de Despesas")
         st.dataframe(df_gastos, hide_index=True, use_container_width=True)
