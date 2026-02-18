@@ -39,7 +39,6 @@ if menu == "📋 Lista de Convidados":
             nome = st.text_input("Nome do titular do convite")
             categoria = st.selectbox("Grupo/Categoria:", ["Padrinho", "Madrinha", "Família da Noiva", "Família do Noivo", "Amigos"])
         with col2:
-            acompanhantes = st.number_input("Acompanhantes extras", min_value=0, max_value=10, value=0)
             confirmado = st.selectbox("Status de Presença:", ["Pendente", "Sim", "Não"])
             
         botao = st.form_submit_button("Salvar Convite")
@@ -71,7 +70,7 @@ elif menu == "💰 Controle de Gastos":
         
         with col1:
             item = st.text_input("Item / Serviço (ex: Fotógrafo, Flores)")
-            categoria = st.selectbox("Categoria do Gasto:", ["Cerimônia", "Festa", "Roupas e Maquiagem", "Papelaria", "Lua de Mel", "Outros"])
+            categoria = st.selectbox("Categoria do Gasto:", ["Cerimônia", "Festa", "Roupas e Maquiagem", "Lua de Mel", "Outros"])
         with col2:
             valor_previsto = st.number_input("Valor Total/Previsto (R$)", min_value=0.0, format="%.2f")
             valor_pago = st.number_input("Valor Já Pago (R$)", min_value=0.0, format="%.2f")
@@ -146,3 +145,4 @@ elif menu == "💰 Controle de Gastos":
         st.dataframe(df_gastos, hide_index=True, use_container_width=True)
     else:
         st.info("Ainda não há gastos registrados. Comece adicionando o primeiro orçamento acima!")
+
