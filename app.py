@@ -106,7 +106,7 @@ elif menu == "💰 Controle de Gastos":
         falta_pagar = total_previsto - total_pago
 
         st.subheader("🎯 Meta do Orçamento Geral")
-        teto_geral = st.number_input("Qual o Teto Máximo total? (R$)", min_value=1.0, value=30000.0, step=1000.0)
+        teto_geral = st.number_input("Qual o Teto Máximo total? (R$)", min_value=1.0, value=50000.0, step=1000.0)
         porcentagem_uso = (total_previsto / teto_geral) * 100
         st.progress(min(porcentagem_uso / 100, 1.0)) 
         
@@ -146,4 +146,5 @@ elif menu == "💰 Controle de Gastos":
                 st.rerun() # Atualiza os gráficos imediatamente!
     else:
         st.info("Ainda não há gastos registrados.")
+
 
