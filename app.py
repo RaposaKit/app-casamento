@@ -38,7 +38,6 @@ if menu == "📋 Lista de Convidados":
             nome = st.text_input("Nome do titular do convite")
             categoria = st.selectbox("Grupo/Categoria:", ["Padrinho", "Madrinha", "Família da Noiva", "Família do Noivo", "Amigos"])
         with col2:
-            acompanhantes = st.number_input("Acompanhantes extras", min_value=0, max_value=10, value=0)
             confirmado = st.selectbox("Status de Presença:", ["Pendente", "Sim", "Não"])
             
         botao = st.form_submit_button("Salvar Convite")
@@ -146,5 +145,6 @@ elif menu == "💰 Controle de Gastos":
                 st.rerun() # Atualiza os gráficos imediatamente!
     else:
         st.info("Ainda não há gastos registrados.")
+
 
 
